@@ -1,0 +1,208 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* 7AI-style light product theme — clean SaaS, dark top nav, white cards */
+    --background: 220 20% 97%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 222 47% 11%; /* dark ink — primary buttons */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 47% 11%;
+
+    --accent: 243 75% 59%; /* indigo accent */
+    --accent-foreground: 0 0% 100%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 243 75% 59%;
+
+    --radius: 0.75rem;
+
+    /* dark top-nav surface (used by the app header) */
+    --nav: 222 30% 11%;
+    --nav-foreground: 0 0% 100%;
+  }
+
+  /* ---- Night mode ---- */
+  .dark {
+    --background: 222 28% 8%;
+    --foreground: 220 16% 92%;
+
+    --card: 222 24% 12%;
+    --card-foreground: 220 16% 92%;
+
+    --popover: 222 24% 12%;
+    --popover-foreground: 220 16% 92%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 222 47% 11%;
+
+    --secondary: 222 20% 18%;
+    --secondary-foreground: 220 16% 92%;
+
+    --accent: 243 80% 70%;
+    --accent-foreground: 0 0% 100%;
+
+    --muted: 222 20% 16%;
+    --muted-foreground: 220 12% 62%;
+
+    --destructive: 0 72% 56%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 222 18% 22%;
+    --input: 222 18% 22%;
+    --ring: 243 80% 70%;
+
+    --nav: 222 40% 6%;
+    --nav-foreground: 0 0% 100%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    background-color: hsl(var(--background));
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(220 13% 80%);
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(220 9% 60%);
+    background-clip: content-box;
+  }
+}
+
+@layer components {
+  /* Clean white product card — subtle border + soft shadow */
+  .glass {
+    position: relative;
+    border: 1px solid hsl(var(--border));
+    background: hsl(var(--card));
+    box-shadow: 0 1px 2px hsl(222 47% 11% / 0.04), 0 1px 3px hsl(222 47% 11% / 0.04);
+  }
+
+  .glass-hover {
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .glass-hover:hover {
+    border-color: hsl(220 13% 84%);
+    box-shadow: 0 4px 12px hsl(222 47% 11% / 0.08);
+  }
+  .dark .glass {
+    box-shadow: none;
+  }
+  .dark .glass-hover:hover {
+    border-color: hsl(222 18% 32%);
+    box-shadow: 0 4px 14px hsl(0 0% 0% / 0.4);
+  }
+
+  .text-glow {
+    text-shadow: none;
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(hsl(222 47% 11% / 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(222 47% 11% / 0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* ---- legacy accent utilities, neutralized for the light theme ---- */
+  .gradient-ink {
+    color: hsl(var(--foreground));
+  }
+  .accent-top {
+    position: relative;
+  }
+  .accent-top::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: hsl(var(--accent));
+    z-index: 1;
+  }
+  .hero-aurora {
+    background: hsl(var(--card));
+  }
+
+  /* Light mode: dark viewport for the 3D telemetry core (scene needs a dark surface) */
+  :root:not(.dark) .telemetry-hero {
+    background: hsl(222 28% 9%);
+    border-color: hsl(222 22% 16%);
+    box-shadow: 0 4px 24px hsl(222 47% 11% / 0.12);
+  }
+  :root:not(.dark) .telemetry-hero .telemetry-hero-muted {
+    color: hsl(220 12% 62%);
+  }
+  .dark .telemetry-hero .telemetry-hero-muted {
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* Monospace IDs / codes — never use text-secondary (that is a bg token) */
+  .text-mono-id {
+    @apply font-mono tabular-nums;
+    color: hsl(var(--accent));
+  }
+
+  .text-code-block {
+    @apply font-mono leading-relaxed;
+    color: hsl(var(--foreground) / 0.88);
+  }
+
+  /* Sigma/KQL panels — always light-on-dark for readability in any theme */
+  .code-panel {
+    @apply overflow-x-auto rounded-lg border p-4 font-mono text-xs leading-relaxed;
+    background: hsl(222 32% 11%);
+    color: hsl(210 28% 92%);
+    border-color: hsl(222 22% 24%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
