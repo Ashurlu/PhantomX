@@ -17,7 +17,7 @@
 
 *Bridging the gap between adversary emulation, detection engineering, and explainable artificial intelligence.*
 
-🌐 **Live demo:** [http://64.226.121.100](http://64.226.121.100) — sign in with `admin` / `admin123`
+🌐 **Live demo:** (https://phantomx-security.vercel.app) — sign in with `admin` / `admin123`
 
 </div>
 
